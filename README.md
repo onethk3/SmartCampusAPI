@@ -3,40 +3,49 @@
 ## Overview
 The Smart Campus API is a JAX-RS based RESTful web service designed to manage campus infrastructure, including rooms, sensors, and their readings. It provides a lightweight, in-memory solution for monitoring environmental data across a university campus.
 
+## Technology Stack
+*   **Language:** Java 21
+*   **Framework:** Jersey 2.39.1 (JAX-RS)
+*   **Namespace:** Java EE 8 (javax.*)
+*   **Server:** Apache Tomcat 9.0
+*   **Build Tool:** Maven
+*   **JSON:** Jackson
+
 ## Build & Run Instructions
 
 ### Prerequisites
 *   Java JDK 21
 *   Apache Maven
+*   Apache Tomcat 9.x
 
-### Installation
-1. Clone the repository to your local machine.
-2. Build the project:
-   ```bash
-   mvn clean install
-   ```
+### Running the API (NetBeans)
+1.  Open the project in NetBeans.
+2.  Right-click the project > **Properties** > **Run**.
+3.  Ensure **Server** is set to **Apache Tomcat 9.0**.
+4.  Ensure **Context Path** is set to `/SmartCampusAPI`.
+5.  Ensure **Relative URL** is set to `api/v1/`.
+6.  Click the **Run** button.
 
-### Running the API
-Start the Grizzly HTTP server:
-```bash
-mvn exec:java
-```
-The API will be available at: `http://localhost:8080/api/v1/`
+The API will be available at: `http://localhost:8080/SmartCampusAPI/api/v1/`
 
 ---
+
+## Sample API Calls (Postman / Curl)
+
+Note: All URLs assume the base is `http://localhost:8080/SmartCampusAPI/api/v1/`
 
 ## Sample Curl Commands for Testing
 
 ### 1. API Discovery
 Get an overview of the API version and available resources.
 ```bash
-curl -X GET http://localhost:8080/api/v1/
+curl -X GET http://localhost:8080/SmartCampusAPI/api/v1/
 ```
 
 ### 2. Create a Room
 Add a new room to the campus data store.
 ```bash
-curl -X POST http://localhost:8080/api/v1/rooms \
+curl -X POST http://localhost:8080/SmartCampusAPI/api/v1/rooms \
      -H "Content-Type: application/json" \
      -d '{"id": "L1", "name": "Main Library", "capacity": 100}'
 ```
@@ -44,7 +53,7 @@ curl -X POST http://localhost:8080/api/v1/rooms \
 ### 3. Register a Sensor
 Register a sensor and link it to an existing room.
 ```bash
-curl -X POST http://localhost:8080/api/v1/sensors \
+curl -X POST http://localhost:8080/SmartCampusAPI/api/v1/sensors \
      -H "Content-Type: application/json" \
      -d '{"id": "S1", "type": "CO2", "status": "ACTIVE", "roomId": "L1"}'
 ```
@@ -52,7 +61,7 @@ curl -X POST http://localhost:8080/api/v1/sensors \
 ### 4. Add a Sensor Reading
 Submit a new data point for a specific sensor.
 ```bash
-curl -X POST http://localhost:8080/api/v1/sensors/S1/read \
+curl -X POST http://localhost:8080/SmartCampusAPI/api/v1/sensors/S1/read \
      -H "Content-Type: application/json" \
      -d '{"id": "READ-01", "timestamp": 1713959008, "value": 45.0}'
 ```
@@ -60,7 +69,7 @@ curl -X POST http://localhost:8080/api/v1/sensors/S1/read \
 ### 5. Filter Sensors by Type
 Retrieve all registered sensors of a specific type.
 ```bash
-curl -X GET "http://localhost:8080/api/v1/sensors?type=CO2"
+curl -X GET "http://localhost:8080/SmartCampusAPI/api/v1/sensors?type=CO2"
 ```
 ---
 
